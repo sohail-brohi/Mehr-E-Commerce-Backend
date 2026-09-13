@@ -10,4 +10,5 @@ const upload = multer({
 });
 
 export const mediaRoutes = Router();
+mediaRoutes.get("/*", asyncHandler(mediaController.serve));
 mediaRoutes.post("/", requireAdmin, upload.single("file"), asyncHandler(mediaController.upload));

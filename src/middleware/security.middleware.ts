@@ -6,6 +6,7 @@ export const allowedOrigins = [
   env.clientUrl,
   "http://localhost:5173",
   "http://127.0.0.1:5173",
+  "https://mehr-e-comerce.vercel.app",
   ...env.corsOrigins,
 ];
 

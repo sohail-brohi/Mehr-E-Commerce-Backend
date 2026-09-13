@@ -232,6 +232,7 @@ Copy `.env.example`. **Never commit `.env`.**
 | `PORT` | no | Default `4000` |
 | `HOST` | no | Bind address. Default `0.0.0.0` (needed in Docker) |
 | `CLIENT_URL` | no | Storefront origin for CORS + email links. Default `http://localhost:5173` |
+| `API_PUBLIC_URL` | no | Public API origin used for image URLs when no request host is available |
 | `ADMIN_EMAIL` | no | House account that always gets Studio |
 | `S3_ENDPOINT` | yes | S3-compatible endpoint |
 | `S3_REGION` | no | Default `us-east-1` |
@@ -251,7 +252,7 @@ Copy `.env.example`. **Never commit `.env`.**
 | `STRIPE_CURRENCY` | no | Default `pkr` |
 | `CORS_ORIGINS` | no | Extra comma-separated storefront origins |
 
-CORS allows `CLIENT_URL`, `http://localhost:5173`, `http://127.0.0.1:5173`, and `CORS_ORIGINS` with credentials.
+CORS allows `CLIENT_URL`, `http://localhost:5173`, `http://127.0.0.1:5173`, `https://mehr-e-comerce.vercel.app`, and `CORS_ORIGINS` with credentials.
 
 ---
 

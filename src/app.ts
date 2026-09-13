@@ -6,6 +6,7 @@ import { optionalAuth } from "./middleware/auth.middleware.js";
 import { errorHandler } from "./middleware/error.middleware.js";
 import { attachGuest } from "./middleware/guest.middleware.js";
 import { notFound } from "./middleware/not-found.middleware.js";
+import { attachRequestOrigin } from "./middleware/request-origin.middleware.js";
 import { corsMiddleware, securityHeaders } from "./middleware/security.middleware.js";
 
 export function createApp() {
@@ -14,6 +15,7 @@ export function createApp() {
   app.set("trust proxy", 1);
 
   app.use(corsMiddleware);
+  app.use(attachRequestOrigin);
   app.post(
     "/api/payments/stripe/webhook",
     express.raw({ type: "application/json" }),
