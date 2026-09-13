@@ -210,6 +210,8 @@ docker run --env-file .env -p 4000:4000 mehr-api
 
 Set `CLIENT_URL` in `.env` to the live storefront origin so CORS and email links work.
 
+**Coolify:** use the latest `main` commit (the image and `Dockerfile` live at the repo root). Build pack = Dockerfile. Do not set a base directory. Redeploy after each push — an older SHA will fail with `open Dockerfile: no such file`.
+
 | File | Role |
 |---|---|
 | `Dockerfile` | Production Node 22 Alpine image |
