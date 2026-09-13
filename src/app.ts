@@ -1,5 +1,7 @@
 import express from "express";
 import { registerApi } from "./api/index.js";
+import * as paymentController from "./controllers/payment.controller.js";
+import { asyncHandler } from "./helpers/async-handler.helper.js";
 import { optionalAuth } from "./middleware/auth.middleware.js";
 import { errorHandler } from "./middleware/error.middleware.js";
 import { attachGuest } from "./middleware/guest.middleware.js";
@@ -12,6 +14,11 @@ export function createApp() {
   app.set("trust proxy", 1);
 
   app.use(corsMiddleware);
+  app.post(
+    "/api/payments/stripe/webhook",
+    express.raw({ type: "application/json" }),
+    asyncHandler(paymentController.stripeWebhook),
+  );
   app.use(express.json({ limit: "2mb" }));
   app.use(securityHeaders);
   app.use(optionalAuth);

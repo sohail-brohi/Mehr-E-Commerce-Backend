@@ -151,3 +151,19 @@ export async function updatePayment(id: string, paymentStatusRaw: unknown) {
   if (!updated) throw new HttpError(404, "Order not found.");
   return mapOrder(updated);
 }
+
+export async function markOrderPaid(id: string, paymentReference?: string) {
+  if (!mongoose.isValidObjectId(id)) throw new HttpError(400, "Invalid order.");
+  const order = await Order.findById(id);
+  if (!order) throw new HttpError(404, "Order not found.");
+  if (order.paymentStatus === "paid") return mapOrder(order);
+
+  order.paymentStatus = "paid";
+  if (paymentReference) order.paymentReference = paymentReference;
+  if (order.status === "Pending") order.status = "Confirmed";
+  await order.save();
+
+  const mapped = mapOrder(order);
+  void sendOrderStatusEmail(mapped);
+  return mapped;
+}

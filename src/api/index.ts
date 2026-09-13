@@ -5,6 +5,7 @@ import { collectionRoutes } from "./collection.routes.js";
 import { healthRoutes } from "./health.routes.js";
 import { mediaRoutes } from "./media.routes.js";
 import { orderRoutes } from "./order.routes.js";
+import { paymentRoutes } from "./payment.routes.js";
 import { productRoutes } from "./product.routes.js";
 import { siteRoutes } from "./site.routes.js";
 import { studioRoutes } from "./studio.routes.js";
@@ -18,6 +19,7 @@ export function registerApi() {
   api.use("/products", productRoutes);
   api.use("/collections", collectionRoutes);
   api.use("/orders", orderRoutes);
+  api.use("/payments", paymentRoutes);
   api.use("/media", mediaRoutes);
   api.use("/wishlist", wishlistRoutes);
   api.use("/studio", studioRoutes);

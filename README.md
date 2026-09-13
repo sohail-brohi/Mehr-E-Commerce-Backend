@@ -246,8 +246,12 @@ Copy `.env.example`. **Never commit `.env`.**
 | `SMTP_FROM` | no | Must match the Gmail account if using Gmail |
 | `OPENAI_API_KEY` | no | Enables LLM rewrite on chat |
 | `OPENAI_MODEL` | no | Default `gpt-4o-mini` |
+| `STRIPE_SECRET_KEY` | no | Enables Stripe Checkout for card orders |
+| `STRIPE_WEBHOOK_SECRET` | no | `whsec_…` for `checkout.session.completed` |
+| `STRIPE_CURRENCY` | no | Default `pkr` |
+| `CORS_ORIGINS` | no | Extra comma-separated storefront origins |
 
-CORS allows `CLIENT_URL`, `http://localhost:5173`, and `http://127.0.0.1:5173` with credentials.
+CORS allows `CLIENT_URL`, `http://localhost:5173`, `http://127.0.0.1:5173`, and `CORS_ORIGINS` with credentials.
 
 ---
 
@@ -378,6 +382,14 @@ Responses map stored keys to public URLs (`images`, `frames360`, `modelUrl`, `si
 | `PATCH` | `/:id/status` | admin | `status` |
 | `PATCH` | `/:id/notes` | admin | `notes` (max 2000) |
 | `PATCH` | `/:id/payment` | admin | `paymentStatus` |
+
+### Payments — `/api/payments`
+
+| Method | Path | Auth | Description |
+|---|---|---|---|
+| `POST` | `/stripe/session` | optional | Create a Stripe Checkout session for a card order (`orderId`, optional `successUrl` / `cancelUrl`) |
+| `GET` | `/stripe/session/:sessionId` | optional | Confirm a Checkout session and mark the order paid |
+| `POST` | `/stripe/webhook` | Stripe signature | Raw-body webhook (`checkout.session.completed`) |
 
 Place order:
 

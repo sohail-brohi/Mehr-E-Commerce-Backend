@@ -2,9 +2,17 @@ import type { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import { env } from "../config/env.js";
 
+export const allowedOrigins = [
+  env.clientUrl,
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+  ...env.corsOrigins,
+];
+
 export const corsMiddleware = cors({
-  origin: [env.clientUrl, "http://localhost:5173", "http://127.0.0.1:5173"],
+  origin: allowedOrigins,
   credentials: true,
+  allowedHeaders: ["Content-Type", "Authorization", "X-Guest-Id"],
 });
 
 export function securityHeaders(_req: Request, res: Response, next: NextFunction) {
