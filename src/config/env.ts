@@ -13,6 +13,7 @@ function required(name: string): string {
 
 export const env = {
   port: Number(process.env.PORT ?? 4000),
+  host: process.env.HOST ?? "0.0.0.0",
   clientUrl: process.env.CLIENT_URL ?? "http://localhost:5173",
   mongodbUri: required("MONGODB_URI"),
   jwtSecret: required("JWT_SECRET"),

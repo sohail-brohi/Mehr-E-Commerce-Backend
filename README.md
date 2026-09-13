@@ -183,6 +183,41 @@ npm run dev
 
 ---
 
+## Docker (live)
+
+The image runs the API on port 4000. Secrets come from `.env` at **run** time — they are not baked into the image.
+
+```sh
+copy .env.example .env
+# fill Mongo, JWT, S3, SMTP
+docker compose up -d --build
+```
+
+- API: http://localhost:4000
+- Health: http://localhost:4000/api/health
+
+```sh
+docker compose logs -f api
+docker compose down
+```
+
+Build the image only:
+
+```sh
+docker build -t mehr-api .
+docker run --env-file .env -p 4000:4000 mehr-api
+```
+
+Set `CLIENT_URL` in `.env` to the live storefront origin so CORS and email links work.
+
+| File | Role |
+|---|---|
+| `Dockerfile` | Production Node 22 Alpine image |
+| `.dockerignore` | Keeps `.env`, `node_modules`, git out of the build |
+| `docker-compose.yml` | Build, publish port 4000, restart, health check |
+
+---
+
 ## Environment
 
 Copy `.env.example`. **Never commit `.env`.**
@@ -193,6 +228,7 @@ Copy `.env.example`. **Never commit `.env`.**
 | `JWT_SECRET` | yes | Signing key for access tokens |
 | `JWT_EXPIRES_IN` | no | Default `7d` |
 | `PORT` | no | Default `4000` |
+| `HOST` | no | Bind address. Default `0.0.0.0` (needed in Docker) |
 | `CLIENT_URL` | no | Storefront origin for CORS + email links. Default `http://localhost:5173` |
 | `ADMIN_EMAIL` | no | House account that always gets Studio |
 | `S3_ENDPOINT` | yes | S3-compatible endpoint |

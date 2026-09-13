@@ -5,6 +5,6 @@ import { createApp } from "./app.js";
 const app = createApp();
 
 await connectDb();
-app.listen(env.port, () => {
-  console.log(`MEHR API listening on http://localhost:${env.port}`);
+app.listen(env.port, env.host, () => {
+  console.log(`MEHR API listening on http://${env.host}:${env.port}`);
 });
