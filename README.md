@@ -185,7 +185,7 @@ npm run dev
 
 ## Docker (live)
 
-The image runs the API on port 4000. Secrets come from `.env` at **run** time — they are not baked into the image.
+The image listens on **3000** (Coolify `ports_exposes`). Secrets come from `.env` at **run** time — they are not baked into the image.
 
 ```sh
 copy .env.example .env
@@ -205,18 +205,18 @@ Build the image only:
 
 ```sh
 docker build -t mehr-api .
-docker run --env-file .env -p 4000:4000 mehr-api
+docker run --env-file .env -e PORT=3000 -p 4000:3000 mehr-api
 ```
 
 Set `CLIENT_URL` in `.env` to the live storefront origin so CORS and email links work.
 
-**Coolify:** use the latest `main` commit (the image and `Dockerfile` live at the repo root). Build pack = Dockerfile. Do not set a base directory. Redeploy after each push — an older SHA will fail with `open Dockerfile: no such file`.
+**Coolify:** use the latest `main` commit (the image and `Dockerfile` live at the repo root). Build pack = Dockerfile. Do not set a base directory. On **General**, set **Ports Exposes** to `3000` and set the `PORT` env var to `3000` (not `4000`) or you will get a bad gateway.
 
 | File | Role |
 |---|---|
 | `Dockerfile` | Production Node 22 Alpine image |
 | `.dockerignore` | Keeps `.env`, `node_modules`, git out of the build |
-| `docker-compose.yml` | Build, publish port 4000, restart, health check |
+| `docker-compose.yml` | Build, map host 4000 → container 3000, restart, health check |
 
 ---
 
